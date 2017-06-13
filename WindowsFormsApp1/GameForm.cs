@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameAI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,8 +19,7 @@ namespace WindowsFormsApp1
         int big = 30;
         int top = 50;
         int left = 50;
-        Dictionary<Point, int> cells = new Dictionary<Point, int>();
-        int user = 1;
+        
         public GameForm()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace WindowsFormsApp1
             label1.Text = "AlphaNy   \r\n By Ny" ;
             Graphics g = gamePnl.CreateGraphics();
 
-            Pen pen = GetPen(user);
+            Pen pen = GetPen(AIFactory.user);
             Font myFont = new Font("微软雅黑", 12);
 
             //创建线渐变画刷：   
@@ -50,13 +50,13 @@ namespace WindowsFormsApp1
 
         private void initCells()
         {
-            cells.Clear();
+            AIFactory.cells.Clear();
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
                     var p = new Point(x, y);
-                    cells.Add(p, 0);
+                    AIFactory.cells.Add(p, 0);
                 }
             }
         }
@@ -84,160 +84,27 @@ namespace WindowsFormsApp1
             var x = (e.X - left + 15) / big;
             var y = (e.Y - top + 15) / big;
             var newp = new Point(x, y);
-            if (!cells.ContainsKey(newp) || cells[newp] != 0)
+            if (!AIFactory.cells.ContainsKey(newp) || AIFactory.cells[newp] != 0)
             {
                 return;
             }
-            Pen pen = GetPen(user);
+            Pen pen = GetPen(AIFactory.user);
             Graphics g = gamePnl.CreateGraphics();
-            cells[newp] = user;
+            AIFactory.cells[newp] = AIFactory.user;
             g.DrawEllipse(pen, x * big + left - big / 2, y * big + top - big / 2, big, big);
             g.FillEllipse(pen.Brush, x * big + left - big / 2, y * big + top - big / 2, big, big);
-            var win = ClacWhoWin(x, y);
+            var win = AIFactory.ClacWhoWin(x, y);
             if (win)
             {
-                MessageBox.Show(user == 1 ? "白方胜" : "黑方胜");
+                MessageBox.Show(AIFactory.user == 1 ? "白方胜" : "黑方胜");
                 initCells();
                 gamePnl.Refresh();
             }
-            user = user == 1 ? 2 : 1;
+            AIFactory.user = AIFactory.user == 1 ? 2 : 1;
             SetText();
         }
 
-        private bool ClacWhoWin(int x, int y)
-        {
-            int ok = 0;
-            //横排
-            for (int i = 0; i < Width; i++)
-            {
-                if (cells[new Point(i, y)] == user)
-                {
-                    ok++;
-                }
-                if (cells[new Point(i, y)] != user)
-                {
-                    ok = 0;
-                }
-                if (ok == 5)
-                {
-                    return true;
-                }
-            }
-            ok = 0;
-            //竖排
-            for (int i = 0; i < Height; i++)
-            {
-
-                if (cells[new Point(x, i)] == user)
-                {
-                    ok++;
-                }
-                if (cells[new Point(x, i)] != user)
-                {
-                    ok = 0;
-                }
-                if (ok == 5)
-                {
-                    return true;
-                }
-            }
-            var add = true;
-            var sub = true;
-            //左斜             
-            for (int i = 0; i < Width; i++)
-            {
-
-                if (i == 0)
-                {
-                    ok++; continue;
-                }
-                if (add)
-                {
-                    if (x + i >= Width || y + i >= Height)
-                    {
-                        continue;
-                    }
-                    if (cells[new Point(x + i, y + i)] == user)
-                    {
-                        ok++;
-                    }
-                    else
-                    {
-                        add = false;
-                    }
-                }
-                if (sub)
-                {
-                    if (x - i < 0 || y - i < 0)
-                    {
-                        continue;
-                    }
-                    if (cells[new Point(x - i, y - i)] == user)
-                    {
-                        ok++;
-
-                    }
-                    else
-                    {
-                        sub = false;
-                    }
-                }
-                if (ok == 5)
-                {
-                    return true;
-                }
-            }
-            add = true;
-            sub = true;
-
-            //右斜
-            ok = 0;
-            for (int i = 0; i < Width; i++)
-            {
-
-                if (i == 0)
-                {
-                    ok++; continue;
-                }
-                if (add)
-                {
-                    if (x + i >= Width || y - i < 0)
-                    {
-                        continue;
-                    }
-                    if (cells[new Point(x + i, y - i)] == user)
-                    {
-                        ok++;
-                    }
-                    else
-                    {
-                        add = false;
-                    }
-                }
-                if (sub)
-                {
-                    if (x - i < 0 || y + i >= Width)
-                    {
-                        continue;
-                    }
-                    if (cells[new Point(x - i, y + i)] == user)
-                    {
-                        ok++;
-
-                    }
-                    else
-                    {
-                        sub = false;
-                    }
-                }
-                if (ok == 5)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
+       
         private void GamePnl_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -257,7 +124,7 @@ namespace WindowsFormsApp1
                 g.DrawLine(pen, big * i + left, top, big * i + left, big * Width + top);
             }
 
-            foreach (var item in cells)
+            foreach (var item in AIFactory.cells)
             {
                 if (item.Value == 1)
                 {

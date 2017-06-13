@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameAI\GameAI.csproj">
+      <Project>{20D2B4E5-438C-482C-9061-7BCBEE075278}</Project>
+      <Name>GameAI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameClient\GameClient.csproj">
       <Project>{c3fe032f-b689-481a-8030-f93c0d697e41}</Project>
       <Name>GameClient</Name>
