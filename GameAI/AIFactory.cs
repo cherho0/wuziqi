@@ -9,24 +9,25 @@ namespace GameAI
 {
     public class AIFactory
     {
-        public static Dictionary<Point, int> cells = new Dictionary<Point, int>();
-        public static int user = 1;
+        private static Dictionary<Point, int> _cells = new Dictionary<Point, int>();
+        private static int _user = 1;
         private const int Width = 15;
         private const int Height = 15;
-        int big = 30;
-        int top = 50;
-        int left = 50;
+
+        public static Dictionary<Point, int> Cells { get => _cells; set => _cells = value; }
+        public static int User { get => _user; set => _user = value; }
+
         public static bool ClacWhoWin(int x, int y)
         {
             int ok = 0;
             //横排
             for (int i = 0; i < Width; i++)
             {
-                if (cells[new Point(i, y)] == user)
+                if (Cells[new Point(i, y)] == User)
                 {
                     ok++;
                 }
-                if (cells[new Point(i, y)] != user)
+                if (Cells[new Point(i, y)] != User)
                 {
                     ok = 0;
                 }
@@ -40,11 +41,11 @@ namespace GameAI
             for (int i = 0; i < Height; i++)
             {
 
-                if (cells[new Point(x, i)] == user)
+                if (Cells[new Point(x, i)] == User)
                 {
                     ok++;
                 }
-                if (cells[new Point(x, i)] != user)
+                if (Cells[new Point(x, i)] != User)
                 {
                     ok = 0;
                 }
@@ -69,7 +70,7 @@ namespace GameAI
                     {
                         continue;
                     }
-                    if (cells[new Point(x + i, y + i)] == user)
+                    if (Cells[new Point(x + i, y + i)] == User)
                     {
                         ok++;
                     }
@@ -84,7 +85,7 @@ namespace GameAI
                     {
                         continue;
                     }
-                    if (cells[new Point(x - i, y - i)] == user)
+                    if (Cells[new Point(x - i, y - i)] == User)
                     {
                         ok++;
 
@@ -117,7 +118,7 @@ namespace GameAI
                     {
                         continue;
                     }
-                    if (cells[new Point(x + i, y - i)] == user)
+                    if (Cells[new Point(x + i, y - i)] == User)
                     {
                         ok++;
                     }
@@ -132,7 +133,7 @@ namespace GameAI
                     {
                         continue;
                     }
-                    if (cells[new Point(x - i, y + i)] == user)
+                    if (Cells[new Point(x - i, y + i)] == User)
                     {
                         ok++;
 

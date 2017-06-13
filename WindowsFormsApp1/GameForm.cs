@@ -35,7 +35,7 @@ namespace WindowsFormsApp1
             label1.Text = "AlphaNy   \r\n By Ny" ;
             Graphics g = gamePnl.CreateGraphics();
 
-            Pen pen = GetPen(AIFactory.user);
+            Pen pen = GetPen(AIFactory.User);
             Font myFont = new Font("微软雅黑", 12);
 
             //创建线渐变画刷：   
@@ -50,13 +50,13 @@ namespace WindowsFormsApp1
 
         private void initCells()
         {
-            AIFactory.cells.Clear();
+            AIFactory.Cells.Clear();
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
                     var p = new Point(x, y);
-                    AIFactory.cells.Add(p, 0);
+                    AIFactory.Cells.Add(p, 0);
                 }
             }
         }
@@ -84,23 +84,23 @@ namespace WindowsFormsApp1
             var x = (e.X - left + 15) / big;
             var y = (e.Y - top + 15) / big;
             var newp = new Point(x, y);
-            if (!AIFactory.cells.ContainsKey(newp) || AIFactory.cells[newp] != 0)
+            if (!AIFactory.Cells.ContainsKey(newp) || AIFactory.Cells[newp] != 0)
             {
                 return;
             }
-            Pen pen = GetPen(AIFactory.user);
+            Pen pen = GetPen(AIFactory.User);
             Graphics g = gamePnl.CreateGraphics();
-            AIFactory.cells[newp] = AIFactory.user;
+            AIFactory.Cells[newp] = AIFactory.User;
             g.DrawEllipse(pen, x * big + left - big / 2, y * big + top - big / 2, big, big);
             g.FillEllipse(pen.Brush, x * big + left - big / 2, y * big + top - big / 2, big, big);
             var win = AIFactory.ClacWhoWin(x, y);
             if (win)
             {
-                MessageBox.Show(AIFactory.user == 1 ? "白方胜" : "黑方胜");
+                MessageBox.Show(AIFactory.User == 1 ? "白方胜" : "黑方胜");
                 initCells();
                 gamePnl.Refresh();
             }
-            AIFactory.user = AIFactory.user == 1 ? 2 : 1;
+            AIFactory.User = AIFactory.User == 1 ? 2 : 1;
             SetText();
         }
 
@@ -124,7 +124,7 @@ namespace WindowsFormsApp1
                 g.DrawLine(pen, big * i + left, top, big * i + left, big * Width + top);
             }
 
-            foreach (var item in AIFactory.cells)
+            foreach (var item in AIFactory.Cells)
             {
                 if (item.Value == 1)
                 {
