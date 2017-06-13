@@ -83,13 +83,14 @@ namespace WindowsFormsApp1
         {
             var x = (e.X - left + 15) / big;
             var y = (e.Y - top + 15) / big;
-            if (cells[new Point(x, y)] != 0)
+            var newp = new Point(x, y);
+            if (!cells.ContainsKey(newp) || cells[newp] != 0)
             {
                 return;
             }
             Pen pen = GetPen(user);
             Graphics g = gamePnl.CreateGraphics();
-            cells[new Point(x, y)] = user;
+            cells[newp] = user;
             g.DrawEllipse(pen, x * big + left - big / 2, y * big + top - big / 2, big, big);
             g.FillEllipse(pen.Brush, x * big + left - big / 2, y * big + top - big / 2, big, big);
             var win = ClacWhoWin(x, y);
@@ -287,6 +288,11 @@ namespace WindowsFormsApp1
         {
             AboutBox1 b = new AboutBox1();
             b.ShowDialog();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,13 @@ namespace WindowsFormsApp1
         [STAThread]
         static void Main()
         {
+           
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameForm());
+            Application.Run(new LoginForm());
+
+            
         }
     }
 }
