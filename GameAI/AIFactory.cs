@@ -340,7 +340,12 @@ namespace GameAI
                 }
             }
             List<int> list = new List<int>() { ok, ok1, ok2, ok3 };
-            return list.OrderByDescending(p => p).First();
+            var l = list.OrderByDescending(p => p).ToList();
+            if (l[0] == l[1] && l[0] >= 4)
+            {
+                l[0] = l[0] * 2;
+            }
+            return l[0];
         }
         /// <summary>
         /// 获取AI点
