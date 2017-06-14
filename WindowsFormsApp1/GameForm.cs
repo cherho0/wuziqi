@@ -93,7 +93,38 @@ namespace WindowsFormsApp1
             AIFactory.Cells[newp] = AIFactory.User;
             g.DrawEllipse(pen, x * big + left - big / 2, y * big + top - big / 2, big, big);
             g.FillEllipse(pen.Brush, x * big + left - big / 2, y * big + top - big / 2, big, big);
-            var win = AIFactory.ClacWhoWin(x, y);
+            var win = AIFactory.ClacWhoWin(x, y) == 5;
+            if (win)
+            {
+                MessageBox.Show(AIFactory.User == 1 ? "白方胜" : "黑方胜");
+                initCells();
+                gamePnl.Refresh();
+                return;
+            }
+            AIFactory.User = AIFactory.User == 1 ? 2 : 1;
+            SetText();
+            if (AIFactory.User == 2)
+            {
+                AiClick();
+            }
+        }
+
+        private void AiClick()
+        {
+            var p = AIFactory.GetBestPoint();
+            var x = p.X;
+            var y = p.Y;
+            var newp = new Point(x, y);
+            if (!AIFactory.Cells.ContainsKey(newp) || AIFactory.Cells[newp] != 0)
+            {
+                return;
+            }
+            Pen pen = GetPen(AIFactory.User);
+            Graphics g = gamePnl.CreateGraphics();
+            AIFactory.Cells[newp] = AIFactory.User;
+            g.DrawEllipse(pen, x * big + left - big / 2, y * big + top - big / 2, big, big);
+            g.FillEllipse(pen.Brush, x * big + left - big / 2, y * big + top - big / 2, big, big);
+            var win = AIFactory.ClacWhoWin(x, y) == 5;
             if (win)
             {
                 MessageBox.Show(AIFactory.User == 1 ? "白方胜" : "黑方胜");
@@ -104,7 +135,6 @@ namespace WindowsFormsApp1
             SetText();
         }
 
-       
         private void GamePnl_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -114,14 +144,28 @@ namespace WindowsFormsApp1
             var cols = Height;
 
 
-            for (int i = 0; i < rows + 1; i++)
+            for (int i = 0; i < rows ; i++)
             {
-                g.DrawLine(pen, left, big * i + top, big * Width + left, big * i + top);
+                g.DrawLine(pen, left, big * i + top, big * (Width-1) + left, big * i + top);
+                Font myFont = new Font("微软雅黑", 8);
+
+                //创建线渐变画刷：   
+                LinearGradientBrush myBrush = new
+                    LinearGradientBrush(ClientRectangle, Color.Green,
+                    Color.Black, LinearGradientMode.Vertical);
+                g.DrawString(i.ToString(), myFont, myBrush, new RectangleF(0, big * i + top, 20,20));
             }
 
-            for (int i = 0; i < cols + 1; i++)
+            for (int i = 0; i < cols ; i++)
             {
-                g.DrawLine(pen, big * i + left, top, big * i + left, big * Width + top);
+                g.DrawLine(pen, big * i + left, top, big * i + left, big * (Height-1) + top);
+                Font myFont = new Font("微软雅黑", 8);
+
+                //创建线渐变画刷：   
+                LinearGradientBrush myBrush = new
+                    LinearGradientBrush(ClientRectangle, Color.Green,
+                    Color.Black, LinearGradientMode.Vertical);
+                g.DrawString(i.ToString(), myFont, myBrush, new RectangleF(big * i + left, big * 15 + top, 20, 20));
             }
 
             foreach (var item in AIFactory.Cells)
