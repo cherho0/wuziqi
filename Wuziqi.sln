@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WuZiQi", "WindowsFormsApp1\WuZiQi.csproj", "{96A3689C-A1E0-4A03-BD43-B225E622DF0B}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{32C116B7-6DF1-46AD-8928-21091573718F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameAI", "GameAI\GameAI.csproj", "{20D2B4E5-438C-482C-9061-7BCBEE075278}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOCR", "TestOCR\TestOCR.csproj", "{8F2024FB-5062-4C64-B170-BAA2F5732754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{20D2B4E5-438C-482C-9061-7BCBEE075278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D2B4E5-438C-482C-9061-7BCBEE075278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D2B4E5-438C-482C-9061-7BCBEE075278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2024FB-5062-4C64-B170-BAA2F5732754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2024FB-5062-4C64-B170-BAA2F5732754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2024FB-5062-4C64-B170-BAA2F5732754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2024FB-5062-4C64-B170-BAA2F5732754}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

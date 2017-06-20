@@ -10,9 +10,11 @@ namespace GameServer
     {
         static void Main(string[] args)
         {
+
             CoreServer cs = new CoreServer();
             cs.Start().Wait();
             Console.ReadLine();
         }
+
     }
 }
